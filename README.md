@@ -4,10 +4,10 @@
 # Topics covered
 
 - [ ] thresholding techniques
-- [ ] colorspace conversion
-- [ ] contour detection
+- [x] colorspace conversion
+- [x] contour detection
 - [ ] image filtering
-- [ ] morphological transformations
+- [x] morphological transformations
 - [ ] arithmetic with images
 - [ ] color histograms
 - [x] color quantization/ segmentation
