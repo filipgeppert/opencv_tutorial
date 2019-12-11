@@ -5,6 +5,16 @@ from utils import filer_image_color, display_image, line_from_points, find_x_for
 
 
 def draw_lanes(img: np.array, lines: np.array, height: int, height_threshold: int) -> np.array:
+    """
+    Define logic for deciding if line is a street lane.
+    Draw left and right street lane.
+    :param img: bgr image
+    :param lines: contains output of probabilistic hue method
+    :param height: vertical coordinate describing end of region of interest
+    :param height_threshold: vertical coordinate describing beginning of region of interest
+
+    :return img_copy, start: image with drawn lanes, coordinates of lanes
+    """
     img_copy = img.copy()
     start = []
     if lines is not None:
@@ -34,6 +44,14 @@ def draw_lanes(img: np.array, lines: np.array, height: int, height_threshold: in
 
 
 def get_lanes(img: np.array) -> np.array:
+    """
+    Filter yellow left and white right lane.
+    Apply edge detection.
+    Get lines.
+
+    :param img: bgr image
+    :return: lane candidates
+    """
     # img_kmeans = cluster_image_colors(img=img, n_clusters=7)
     img_hsv = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
     img_yellow = filer_image_color(img_hsv=img_hsv,
@@ -47,8 +65,10 @@ def get_lanes(img: np.array) -> np.array:
     # Erode white pixels
     kernel = np.ones((3, 3), np.uint8)
     img_white = cv2.morphologyEx(img_white, cv2.MORPH_OPEN, kernel=kernel)
+    # img_white = cv2.erode(img_white, kernel=kernel, iterations=2)
+
     img_final = cv2.add(img_yellow, img_white)
-    # display_image(img_final)
+
     img_edges = cv2.Canny(img_final, 50, 200)
 
     # Hough Line keeps tracks of the intersection between curves of every point in image.
@@ -71,6 +91,7 @@ def main():
     lanes = get_lanes(img=img)
     img_lanes, points = draw_lanes(img=img, lines=lanes, height=height, height_threshold=height_threshold)
     display_image(img=img_lanes, name=img_name, color_callback=True)
+
 
 if __name__ == "__main__":
     main()
