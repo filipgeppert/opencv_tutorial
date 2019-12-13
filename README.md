@@ -1,3 +1,5 @@
+![animation car](cargh.gif)
+
 # Tutorial and slides
 This repository contains code presented during an OpenCV tutorial at PyData Warsaw 2019.
 
