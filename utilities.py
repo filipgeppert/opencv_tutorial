@@ -87,4 +87,7 @@ def find_x_for_y(slope: float, point_slope: float, y: int):
     """
     :return: x coordinate of a given line
     """
-    return (y-point_slope) * (1/slope)
+    if slope == 0:
+        return y - point_slope
+    else:
+        return (y-point_slope) * (1/slope)
